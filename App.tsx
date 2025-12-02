@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { GameStage, ViewState, SystemStatus, LoreEntry } from './types';
+import React, { useState, useEffect, useCallback } from 'react';
+import { sdk } from "@farcaster/miniapp-sdk";
+import { useAccount } from 'wagmi';
+import { GameStage, ViewState, SystemStatus, LoreEntry, FarcasterUser } from './types';
 import { generateAncientLore } from './services/geminiService';
 import { AttributionTerminal } from './components/AttributionTerminal';
 import { PuzzleMechanism } from './components/PuzzleMechanism';
@@ -11,7 +13,10 @@ import {
   Map, 
   ChevronRight,
   Terminal as TerminalIcon,
-  Globe
+  Globe,
+  User,
+  Wallet,
+  Share
 } from 'lucide-react';
 import { 
   LineChart, 
@@ -49,6 +54,27 @@ export default function App() {
   });
   const [loreLog, setLoreLog] = useState<LoreEntry[]>([]);
   const [chartData, setChartData] = useState(generateChartData(1));
+  const [farcasterUser, setFarcasterUser] = useState<FarcasterUser | null>(null);
+  
+  // Wagmi Account Hook
+  const { address, isConnected } = useAccount();
+
+  // Initialize Farcaster Mini App SDK
+  useEffect(() => {
+    const initSdk = async () => {
+      try {
+        if (await sdk.isInMiniApp()) {
+          const context = await sdk.context;
+          if (context.user) {
+            setFarcasterUser(context.user);
+          }
+        }
+      } catch (e) {
+        console.warn("Farcaster SDK init failed:", e);
+      }
+    };
+    initSdk();
+  }, []);
 
   // Simulating machinery background noise/updates
   useEffect(() => {
@@ -86,6 +112,13 @@ export default function App() {
     }
   };
 
+  const handleShare = useCallback(() => {
+    sdk.actions.composeCast({
+      text: `🌑 System Status: ONLINE\n⚡ Energy: ${systemStatus.energy.toFixed(1)} PW\n📍 Sector: ${STAGE_NAMES[stage]}\n\nI am reactivating the Lunar Machine Sanctum.`,
+      embeds: ['https://example.com']
+    });
+  }, [stage, systemStatus]);
+
   const renderContent = () => {
     switch (view) {
       case ViewState.MENU:
@@ -97,6 +130,24 @@ export default function App() {
             <p className="text-sanctum-400 font-mono text-sm max-w-md text-center">
               INITIATING WAKE PROTOCOL... SYSTEM DORMANT FOR 4,000 CYCLES.
             </p>
+            
+            <div className="flex flex-col gap-2 items-center">
+              {farcasterUser && (
+                 <div className="flex items-center gap-2 p-2 bg-sanctum-900/50 border border-sanctum-800 rounded min-w-[200px] justify-center">
+                    <span className="text-xs text-sanctum-500">IDENTIFIED:</span>
+                    <span className="text-sm font-bold text-sanctum-glow">@{farcasterUser.username}</span>
+                 </div>
+              )}
+              {isConnected && address && (
+                 <div className="flex items-center gap-2 p-2 bg-sanctum-900/50 border border-sanctum-800 rounded min-w-[200px] justify-center">
+                    <Wallet size={14} className="text-sanctum-500" />
+                    <span className="text-xs font-mono text-sanctum-glow">
+                      {address.slice(0, 6)}...{address.slice(-4)}
+                    </span>
+                 </div>
+              )}
+            </div>
+
             <button 
               onClick={() => setView(ViewState.GAME)}
               className="px-8 py-3 bg-sanctum-glow/10 border border-sanctum-glow text-sanctum-glow font-bold tracking-widest hover:bg-sanctum-glow hover:text-black transition-all duration-300"
@@ -218,9 +269,30 @@ export default function App() {
           <button onClick={() => setView(ViewState.ATTRIBUTION)} className={`${view === ViewState.ATTRIBUTION ? 'text-sanctum-glow' : 'text-sanctum-500'} hover:text-white flex items-center gap-2`}>
             <Database size={14} /> <span className="hidden md:inline">PROTOCOLS</span>
           </button>
-          <div className="flex items-center gap-2 text-sanctum-500">
-             <Power size={14} /> <span className="hidden md:inline">ONLINE</span>
-          </div>
+          
+          <button onClick={handleShare} className="text-sanctum-500 hover:text-white flex items-center gap-2">
+            <Share size={14} /> <span className="hidden md:inline">BROADCAST</span>
+          </button>
+
+          {farcasterUser ? (
+            <div className="flex items-center gap-2 text-sanctum-glow border border-sanctum-glow/30 px-2 py-1 rounded bg-sanctum-900">
+               {farcasterUser.pfpUrl ? (
+                 <img src={farcasterUser.pfpUrl} alt={farcasterUser.username} className="w-4 h-4 rounded-full" />
+               ) : (
+                 <User size={14} />
+               )}
+               <span className="hidden md:inline">@{farcasterUser.username}</span>
+            </div>
+          ) : isConnected && address ? (
+            <div className="flex items-center gap-2 text-sanctum-glow border border-sanctum-glow/30 px-2 py-1 rounded bg-sanctum-900">
+               <Wallet size={14} />
+               <span className="hidden md:inline font-mono">{address.slice(0, 6)}...{address.slice(-4)}</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-sanctum-500">
+               <Power size={14} /> <span className="hidden md:inline">ONLINE</span>
+            </div>
+          )}
         </div>
       </nav>
 

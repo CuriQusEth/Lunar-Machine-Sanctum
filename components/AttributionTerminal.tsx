@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { sdk } from "@farcaster/miniapp-sdk";
 import { generateAttributionSuffix, WALLET_ADDRESS } from '../utils/erc8021';
-import { Terminal, ShieldCheck, Share2, Copy, CheckCircle } from 'lucide-react';
+import { Terminal, ShieldCheck, Share2, Copy, CheckCircle, ExternalLink } from 'lucide-react';
 
 export const AttributionTerminal: React.FC = () => {
   const [appCode, setAppCode] = useState('lunar_sanctum');
@@ -16,6 +17,10 @@ export const AttributionTerminal: React.FC = () => {
     navigator.clipboard.writeText(generatedSuffix);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const openExplorer = () => {
+    sdk.actions.openUrl(`https://basescan.org/address/${WALLET_ADDRESS}`);
   };
 
   return (
@@ -35,10 +40,15 @@ export const AttributionTerminal: React.FC = () => {
 
       <div className="space-y-6">
         <div className="bg-black/50 p-4 rounded border border-sanctum-700">
-          <p className="text-sm text-sanctum-400 mb-2 font-bold flex items-center gap-2">
-            <Terminal className="w-4 h-4" />
-            TARGET WALLET (DEVELOPER FUND)
-          </p>
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-sm text-sanctum-400 font-bold flex items-center gap-2">
+              <Terminal className="w-4 h-4" />
+              TARGET WALLET (DEVELOPER FUND)
+            </p>
+            <button onClick={openExplorer} className="text-xs text-sanctum-500 hover:text-sanctum-glow flex items-center gap-1 transition-colors">
+                 <ExternalLink className="w-3 h-3" /> EXPLORER
+            </button>
+          </div>
           <div className="font-mono text-xs md:text-sm text-white break-all bg-sanctum-800 p-3 rounded">
             {WALLET_ADDRESS}
           </div>

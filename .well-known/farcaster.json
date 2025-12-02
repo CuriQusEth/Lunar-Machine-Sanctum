@@ -1,6 +1,6 @@
 {
   "accountAssociation": {
-    "header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+    "header": "eyJhbGciOiJIUzI1NiIsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMmVmNzkwRGQ3OTkzQTM1ZkQ4NDdDMDUzRURkQUU5NDBEMDU1NTk2In0",
     "payload": "eyJkb21haW4iOiJleGFtcGxlLmNvbSJ9",
     "signature": "MHhkZWFkYmVlZi4uLl9SRVBMQUNFX1dJVEhfUkVBTF9TSUdOQVRVUkVfRk9SX1lPVVJfRE9NQUlOXy4uLg"
   },
@@ -34,7 +34,14 @@
     "ogTitle": "Lunar Machine Sanctum",
     "ogDescription": "Reactivate ancient machinery deep within the Moon.",
     "ogImageUrl": "https://example.com/og-image.png",
-    "noindex": true
+    "noindex": false,
+    "canonicalDomain": "example.com",
+    "requiredChains": [
+      "eip155:8453"
+    ],
+    "requiredCapabilities": [
+      "actions.ready"
+    ]
   },
   "frame": {
     "version": "1",

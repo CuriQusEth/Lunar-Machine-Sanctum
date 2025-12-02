@@ -32,3 +32,10 @@ export interface ERC8021Payload {
   schemaId: number;
   suffix: string;
 }
+
+export interface FarcasterUser {
+  fid: number;
+  username?: string;
+  displayName?: string;
+  pfpUrl?: string;
+}

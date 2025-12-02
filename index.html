@@ -9,11 +9,24 @@
     <meta property="og:title" content="Lunar Machine Sanctum" />
     <meta property="og:description" content="Reactivate ancient machinery deep within the Moon." />
     <meta property="og:image" content="https://example.com/og-image.png" />
-    <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="https://example.com/og-image.png" />
-    <meta property="fc:frame:button:1" content="Enter Sanctum" />
-    <meta property="fc:frame:button:1:action" content="link" />
-    <meta property="fc:frame:button:1:target" content="https://example.com/" />
+    
+    <!-- Mini App Embed -->
+    <meta
+      name="fc:miniapp"
+      content='{
+        "version": "next",
+        "imageUrl": "https://example.com/og-image.png",
+        "button": {
+          "title": "Enter Sanctum",
+          "action": {
+            "type": "launch_frame",
+            "url": "https://example.com",
+            "splashImageUrl": "https://example.com/splash.png",
+            "splashBackgroundColor": "#020408"
+          }
+        }
+      }'
+    />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -73,7 +86,15 @@
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "@farcaster/miniapp-sdk": "https://cdn.jsdelivr.net/npm/@farcaster/miniapp-sdk@0.1.0/+esm",
+    "wagmi": "https://esm.sh/wagmi@2.14.0?external=react,react-dom",
+    "wagmi/chains": "https://esm.sh/wagmi@2.14.0/chains?external=react,react-dom",
+    "wagmi/connectors": "https://esm.sh/wagmi@2.14.0/connectors?external=react,react-dom",
+    "viem": "https://esm.sh/viem@2.21.0",
+    "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@5.59.0?external=react,react-dom",
+    "@farcaster/miniapp-wagmi-connector": "https://esm.sh/@farcaster/miniapp-wagmi-connector@0.1.0?external=react,react-dom,wagmi,viem",
+    "wagmi/": "https://aistudiocdn.com/wagmi@^3.0.2/"
   }
 }
 </script>
