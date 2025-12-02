@@ -4,6 +4,38 @@
     "payload": "eyJkb21haW4iOiJleGFtcGxlLmNvbSJ9",
     "signature": "MHhkZWFkYmVlZi4uLl9SRVBMQUNFX1dJVEhfUkVBTF9TSUdOQVRVUkVfRk9SX1lPVVJfRE9NQUlOXy4uLg"
   },
+  "baseBuilder": {
+    "ownerAddress": "0x29536D0bc1004ab274c4F0F59734Ad74D4559b7B"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Lunar Machine Sanctum",
+    "homeUrl": "https://example.com",
+    "iconUrl": "https://example.com/icon.png",
+    "splashImageUrl": "https://example.com/splash.png",
+    "splashBackgroundColor": "#020408",
+    "subtitle": "Ancient Moon Puzzle",
+    "description": "Reactivate ancient machinery, decode ERC-8021 protocols, and uncover the truth of the Sanctum.",
+    "screenshotUrls": [
+      "https://example.com/screen1.png",
+      "https://example.com/screen2.png",
+      "https://example.com/screen3.png"
+    ],
+    "primaryCategory": "games",
+    "tags": [
+      "puzzle",
+      "scifi",
+      "adventure",
+      "space",
+      "exploration"
+    ],
+    "heroImageUrl": "https://example.com/hero.png",
+    "tagline": "Awaken the Sanctum",
+    "ogTitle": "Lunar Machine Sanctum",
+    "ogDescription": "Reactivate ancient machinery deep within the Moon.",
+    "ogImageUrl": "https://example.com/og-image.png",
+    "noindex": true
+  },
   "frame": {
     "version": "1",
     "name": "Lunar Machine Sanctum",
