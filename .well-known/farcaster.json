@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+    "payload": "eyJkb21haW4iOiJleGFtcGxlLmNvbSJ9",
+    "signature": "MHhkZWFkYmVlZi4uLl9SRVBMQUNFX1dJVEhfUkVBTF9TSUdOQVRVUkVfRk9SX1lPVVJfRE9NQUlOXy4uLg"
+  },
+  "frame": {
+    "version": "1",
+    "name": "Lunar Machine Sanctum",
+    "iconUrl": "https://example.com/icon.png",
+    "homeUrl": "https://example.com",
+    "imageUrl": "https://example.com/og-image.png",
+    "buttonTitle": "Enter Sanctum",
+    "splashImageUrl": "https://example.com/splash.png",
+    "splashBackgroundColor": "#020408",
+    "webhookUrl": "https://example.com/api/frame"
+  }
+}
